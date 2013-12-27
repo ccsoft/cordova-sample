@@ -21,8 +21,8 @@ public class CordovaFacebook extends CordovaPlugin {
 			{
 				Permissions.BASIC_INFO
 			};
-	private final String appId = "411679318850068";
-	private final String appNamespace = "kelimece";
+	private final String appId = "YOUR_APP_ID";
+	private final String appNamespace = "YOUR_APP_NAMESPACE";
 	private SimpleFacebookConfiguration facebookConfiguration = null;
     @Override
     public boolean execute(String action, JSONArray args,
