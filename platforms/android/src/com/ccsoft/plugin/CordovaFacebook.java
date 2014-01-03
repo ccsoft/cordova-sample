@@ -228,7 +228,8 @@ public class CordovaFacebook extends CordovaPlugin {
     				mSimpleFacebook.publish(feed, onPublishListener);
     			};
     		};
-    		cordova.getActivity().runOnUiThread(runnable);   	
+    		cordova.getActivity().runOnUiThread(runnable);
+        	
         	return true;
         }
         
@@ -277,6 +278,7 @@ public class CordovaFacebook extends CordovaPlugin {
 				}
     	        callbackContext.success(r);
     	    }
+
     	};
     	
     	// prepare the properties that you need
