@@ -18,9 +18,20 @@
  */
 
 #import <Cordova/CDVPlugin.h>
+#import <FacebookSDK/FacebookSDK.h>
 
 @interface CordovaFacebook : CDVPlugin
 
 - (void)init:(CDVInvokedUrlCommand*)command;
+- (void)login:(CDVInvokedUrlCommand*)command;
+- (void)logout:(CDVInvokedUrlCommand*)command;
+- (void)info:(CDVInvokedUrlCommand*)command;
+- (void)feed:(CDVInvokedUrlCommand*)command;
+
++ (void)sessionStateChanged:(FBSession *)session state:(FBSessionState) state error:(NSError *)error;
++ (BOOL)isReadPermission: (NSString*) permission;
+
+@property (nonatomic, strong) NSMutableArray *readPermissions;
+@property (nonatomic, strong) NSMutableArray *publishPermissions;
 
 @end

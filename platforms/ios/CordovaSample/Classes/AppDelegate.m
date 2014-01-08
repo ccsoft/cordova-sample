@@ -130,4 +130,19 @@
     [[NSURLCache sharedURLCache] removeAllCachedResponses];
 }
 
+// During the Facebook login flow, your app passes control to the Facebook iOS app or Facebook in a mobile browser.
+// After authentication, your app will be called back with the session information.
+- (BOOL)application:(UIApplication *)application
+            openURL:(NSURL *)url
+  sourceApplication:(NSString *)sourceApplication
+         annotation:(id)annotation
+{
+    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                          url, @"url", sourceApplication, @"sourceApplication", @"NO", @"success", nil];
+    [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"CordovaPluginOpenURLNotification" object:self userInfo:dict]];
+    
+    NSString* success = [dict objectForKey:@"success"];
+    return ![success isEqualToString:@"NO"];
+}
+
 @end
