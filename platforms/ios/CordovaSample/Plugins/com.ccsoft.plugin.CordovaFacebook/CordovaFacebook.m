@@ -23,12 +23,25 @@
 
 @implementation CordovaFacebook
 
+
+static id <CDVCommandDelegate> commandDelegate = nil;
++ (id <CDVCommandDelegate>) commandDelegate {return commandDelegate;}
++ (void)setCommandDelegate:(id <CDVCommandDelegate>)del {commandDelegate = del;}
+
+
+static NSString* loginCallbackId = nil;
++ (NSString*) loginCallbackId {return loginCallbackId;}
++ (void)setLoginCallbackId:(NSString *)cb {loginCallbackId = cb;}
+
+static NSMutableArray *readPermissions;
++ (NSMutableArray *)readPermissions { return readPermissions; }
+//+ (void)setReadPermissions:(NSMutableArray *)param { readPermissions = param; }
+
+static NSMutableArray *publishPermissions;
++ (NSMutableArray *)publishPermissions { return publishPermissions; }
+//+ (void)setPublishPermissions:(NSMutableArray *)param { publishPermissions = param; }
+
 +(void)load {
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(notifiedDidFinishLaunching:)
-                                                 name:UIApplicationDidFinishLaunchingNotification
-                                               object:nil];
-    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(notifiedOpenUrl:)
                                                  name:@"CordovaPluginOpenURLNotification"
@@ -40,25 +53,7 @@
                                                object:nil];
 }
 
-+(void)notifiedDidFinishLaunching:(NSNotification*)notification {
-    
-    // Whenever a person opens the app, check for a cached session
-    if (FBSession.activeSession.state == FBSessionStateCreatedTokenLoaded) {
-        
-        // If there's one, just open the session silently, without showing the user the login UI
-        [FBSession openActiveSessionWithReadPermissions:@[@"basic_info"]
-                                           allowLoginUI:NO
-                                      completionHandler:^(FBSession *session, FBSessionState state, NSError *error) {
-                                          // Handler for session state changes
-                                          // This method will be called EACH time the session state changes,
-                                          // also for intermediate states and NOT just when the session open
-                                          [CordovaFacebook sessionStateChanged:session state:state error:error];
-                                      }];
-    }
-}
-
 +(void)notifiedOpenUrl:(NSNotification*)notification {
-    
     NSDictionary* params = notification.userInfo;
     if (params == nil) {
         return;
@@ -88,119 +83,155 @@
     [FBAppCall handleDidBecomeActive];
 }
 
++ (BOOL)activeSessionHasPermissions:(NSArray *)permissions
+{
+    __block BOOL hasPermissions = YES;
+    for (NSString *permission in permissions)
+    {
+        NSInteger index = [[FBSession activeSession].permissions indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
+            if ([obj isEqualToString:permission])
+            {
+                *stop = YES;
+            }
+            return *stop;
+        }];
+        
+        if (index == NSNotFound)
+        {
+            hasPermissions = NO;
+        }
+    }
+    return hasPermissions;
+}
+
 // This method will handle ALL the session state changes in the app
 + (void)sessionStateChanged:(FBSession *)session state:(FBSessionState) state error:(NSError *)error
 {
     // If the session was opened successfully
     if (!error && state == FBSessionStateOpen){
         NSLog(@"Session opened");
-        // Show the user the logged-in UI
-        //[self userLoggedIn];
+        
+        if([CordovaFacebook loginCallbackId] != nil) {
+            CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:[[FBSession.activeSession accessTokenData] accessToken] ];
+            [[CordovaFacebook commandDelegate] sendPluginResult:pluginResult callbackId:[CordovaFacebook loginCallbackId]];
+        }
+        else {
+            NSLog(@"noone to callback");
+        }
         return;
     }
     if (state == FBSessionStateClosed || state == FBSessionStateClosedLoginFailed){
         // If the session is closed
         NSLog(@"Session closed");
-        // Show the user the logged-out UI
-        // [self userLoggedOut];
+        if([CordovaFacebook loginCallbackId] != nil) {
+            CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Login failed or closed"];
+            [[CordovaFacebook commandDelegate] sendPluginResult:pluginResult callbackId:[CordovaFacebook loginCallbackId]];
+        }
     }
 
     // Handle errors
     if (error){
         NSLog(@"Error");
-        NSString *alertText;
-        //NSString *alertTitle;
+        NSString *errorText;
         // If the error requires people using an app to make an action outside of the app in order to recover
         if ([FBErrorUtility shouldNotifyUserForError:error] == YES){
-            //alertTitle = @"Something went wrong";
-            alertText = [FBErrorUtility userMessageForError:error];
-            NSLog(@"%@", alertText);
-            //  [self showMessage:alertText withTitle:alertTitle];
+            errorText = [FBErrorUtility userMessageForError:error];
         } else {
 
             // If the user cancelled login, do nothing
             if ([FBErrorUtility errorCategoryForError:error] == FBErrorCategoryUserCancelled) {
-                NSLog(@"User cancelled login");
-
+                errorText = @"User cancelled login";
+                
                 // Handle session closures that happen outside of the app
             } else if ([FBErrorUtility errorCategoryForError:error] == FBErrorCategoryAuthenticationReopenSession){
-                //alertTitle = @"Session Error";
-                alertText = @"Your current session is no longer valid. Please log in again.";
-                //   [self showMessage:alertText withTitle:alertTitle];
-                NSLog(@"%@", alertText);
-
+                errorText = @"Your current session is no longer valid. Please log in again.";
+                
                 // For simplicity, here we just show a generic message for all other errors
                 // You can learn how to handle other errors using our guide: https://developers.facebook.com/docs/ios/errors
             } else {
                 //Get more error information from the error
                 NSDictionary *errorInformation = [[[error.userInfo objectForKey:@"com.facebook.sdk:ParsedJSONResponseKey"] objectForKey:@"body"] objectForKey:@"error"];
                 
-                // Show the user an error message
-                //alertTitle = @"Something went wrong";
-                alertText = [NSString stringWithFormat:@"Please retry. \n\n If the problem persists contact us and mention this error code: %@", [errorInformation objectForKey:@"message"]];
-                NSLog(@"%@", alertText);
-                //[self showMessage:alertText withTitle:alertTitle];
-                
+                errorText = [NSString stringWithFormat:@"Please retry. \n\n If the problem persists contact us and mention this error code: %@", [errorInformation objectForKey:@"message"]];
             }
+        }
+        
+        NSLog(@"%@", errorText);
+        if([CordovaFacebook loginCallbackId] != nil) {
+            CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorText];
+            [[CordovaFacebook commandDelegate] sendPluginResult:pluginResult callbackId:[CordovaFacebook loginCallbackId]];
         }
         
         // Clear this token
         [FBSession.activeSession closeAndClearTokenInformation];
-        // Show the user the logged-out UI
-        //[self userLoggedOut];
     }
 }
 
 - (void)init:(CDVInvokedUrlCommand*)command
 {
-    CDVPluginResult* pluginResult = nil;
+    [CordovaFacebook setLoginCallbackId:command.callbackId];
+    [CordovaFacebook setCommandDelegate:self.commandDelegate];
 //    NSString* appId = [command.arguments objectAtIndex:0];
 //    NSString* appNamespace = [command.arguments objectAtIndex:1];
     
+    NSLog(@"FB SDK: %@", [FBSettings sdkVersion]);
+    
     NSArray* appPermissions = [command.arguments objectAtIndex:2];
-    _readPermissions = [[NSMutableArray alloc] init];
-    _publishPermissions = [[NSMutableArray alloc] init];
+    readPermissions = [[NSMutableArray alloc] init];
+    publishPermissions = [[NSMutableArray alloc] init];
     for (NSString* perm in appPermissions) {
         if([CordovaFacebook isReadPermission:perm]) {
-            [_readPermissions addObject:perm];
+            [readPermissions addObject:perm];
         } else {
-            [_publishPermissions addObject:perm];
+            [publishPermissions addObject:perm];
         }
     }
     
-    pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
-    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+    // Whenever a person inits, check for a cached session
+    if (FBSession.activeSession.state == FBSessionStateCreatedTokenLoaded) {
+        
+        // If there's one, just open the session silently, without showing the user the login UI
+        [FBSession openActiveSessionWithReadPermissions:@[@"basic_info"]
+                                           allowLoginUI:NO
+                                      completionHandler:^(FBSession *session, FBSessionState state, NSError *error) {
+                                          // Handler for session state changes
+                                          // This method will be called EACH time the session state changes,
+                                          // also for intermediate states and NOT just when the session open
+                                          [CordovaFacebook sessionStateChanged:session state:state error:error];
+                                      }];
+    }
 }
 
 - (void)login:(CDVInvokedUrlCommand*)command
 {
-    CDVPluginResult* pluginResult = nil;
-    
-    if(_readPermissions == nil) {
+    [CordovaFacebook setLoginCallbackId:nil];
+    if([FBSession.activeSession isOpen]){
+        NSLog(@"already logged in");
+        CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:[[FBSession.activeSession accessTokenData] accessToken] ];
+        [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+        return;
+    }
+    if(readPermissions == nil) {
         NSLog(@"init with some permissions first");
-        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"no read permissions"];
+        CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"no read permissions"];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
         return;
     }
     
+    [CordovaFacebook setLoginCallbackId:command.callbackId];
     // Open a session showing the user the login UI
     // You must ALWAYS ask for basic_info permissions when opening a session
-    [FBSession openActiveSessionWithReadPermissions:_readPermissions
+    [FBSession openActiveSessionWithReadPermissions:readPermissions
                                        allowLoginUI:YES
                                   completionHandler:
      ^(FBSession *session, FBSessionState state, NSError *error) {
          // Call the app delegate's sessionStateChanged:state:error method to handle session state changes
          [CordovaFacebook sessionStateChanged:session state:state error:error];
      }];
-
-    pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
-    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 
 - (void)logout:(CDVInvokedUrlCommand*)command
 {
-    CDVPluginResult* pluginResult = nil;
-    
     // If the session state is any of the two "open" states when the button is clicked
     if (FBSession.activeSession.state == FBSessionStateOpen
         || FBSession.activeSession.state == FBSessionStateOpenTokenExtended) {
@@ -210,12 +241,17 @@
         [FBSession.activeSession closeAndClearTokenInformation];
     }
     
-    pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+    CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 
 - (void)info:(CDVInvokedUrlCommand*)command
 {
+    if([FBSession.activeSession isOpen]) { // not have a session to post
+        CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"no active session"];
+        [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+        return;
+    }
     CDVPluginResult* pluginResult = nil;
     pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
@@ -223,8 +259,39 @@
 
 - (void)feed:(CDVInvokedUrlCommand*)command
 {
-    CDVPluginResult* pluginResult = nil;
-    pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+    if([FBSession.activeSession isOpen] == NO) { // not have a session to post
+        CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"no active session"];
+        [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+        return;
+    }
+    
+    // if need publish permissions
+    if(publishPermissions.count > 0 && [CordovaFacebook activeSessionHasPermissions:publishPermissions] == NO) {
+            [FBSession.activeSession requestNewPublishPermissions:publishPermissions
+                              defaultAudience:FBSessionDefaultAudienceEveryone
+                            completionHandler:^(FBSession *session, NSError *error) {
+                                if(error != nil) {
+                                    NSLog(@"Request publish err:%@", error);
+                                    return;
+                                }
+                                else if ([CordovaFacebook activeSessionHasPermissions:publishPermissions] == NO) {
+                                    NSLog(@"Request publish failed");
+                                    return;
+                                }
+                                NSLog(@"Request publish granted for: %@", publishPermissions);
+                                // do feed post now
+                                [self post:command];
+                            }];
+    }
+    else {
+        // do feed post now
+        [self post:command];
+    }
+}
+
+- (void)post:(CDVInvokedUrlCommand*)command
+{
+    CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 

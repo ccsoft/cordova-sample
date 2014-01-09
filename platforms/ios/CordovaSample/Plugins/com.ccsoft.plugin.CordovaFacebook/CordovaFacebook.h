@@ -30,8 +30,18 @@
 
 + (void)sessionStateChanged:(FBSession *)session state:(FBSessionState) state error:(NSError *)error;
 + (BOOL)isReadPermission: (NSString*) permission;
++ (BOOL)activeSessionHasPermissions:(NSArray *)permissions;
 
-@property (nonatomic, strong) NSMutableArray *readPermissions;
-@property (nonatomic, strong) NSMutableArray *publishPermissions;
++ (NSMutableArray*) readPermissions;
+//+ (void)setReadPermissions:(NSMutableArray *)perms;
+
++ (NSMutableArray*) publishPermissions;
+//+ (void)setPublishPermissions:(NSMutableArray *)perms;
+
++ (NSString*) loginCallbackId;
++ (void)setLoginCallbackId:(NSString *)cb;
+
++ (id <CDVCommandDelegate>) commandDelegate;
++ (void)setCommandDelegate:(id <CDVCommandDelegate>)del;
 
 @end
