@@ -247,14 +247,24 @@ static NSMutableArray *publishPermissions;
 
 - (void)info:(CDVInvokedUrlCommand*)command
 {
-    if([FBSession.activeSession isOpen]) { // not have a session to post
+    if([FBSession.activeSession isOpen] == NO) { // not have a session to post
         CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"no active session"];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
         return;
     }
-    CDVPluginResult* pluginResult = nil;
-    pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
-    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+    
+    [[FBRequest requestForMe] startWithCompletionHandler:
+     ^(FBRequestConnection *connection, NSDictionary<FBGraphUser> *info, NSError *error) {
+         if (!error) {
+             NSLog(@"User info: %@", info);
+             CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:info];
+             [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+         }
+         else {
+             CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"failed to get info"];
+             [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+         }
+     }];
 }
 
 - (void)feed:(CDVInvokedUrlCommand*)command
