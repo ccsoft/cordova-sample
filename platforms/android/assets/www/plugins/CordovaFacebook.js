@@ -42,7 +42,7 @@ var CC;
 
         CordovaFacebook.prototype.info = function (successcb, failcb) {
             window.cordova.exec(function (response) {
-                console.log("info call successful " + response);                
+                console.log("info call successful " + response);
                 if (successcb)
                     successcb(response);
             }, function (err) {
@@ -67,6 +67,19 @@ var CC;
                 if (failcb)
                     failcb(err);
             }, "CordovaFacebook", "feed", [name, webUrl, logoUrl, caption, description]);
+        };
+
+        CordovaFacebook.prototype.share = function (name, webUrl, logoUrl, caption, description, successcb, failcb) {
+            window.cordova.exec(function (response) {
+                console.log("share call successful: " + response);
+                if (successcb) {
+                    successcb();
+                }
+            }, function (err) {
+                console.log("share call failed with error: " + err);
+                if (failcb)
+                    failcb(err);
+            }, "CordovaFacebook", "share", [name, webUrl, logoUrl, caption, description]);
         };
         return CordovaFacebook;
     })();
