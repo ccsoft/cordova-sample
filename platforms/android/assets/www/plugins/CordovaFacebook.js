@@ -42,7 +42,7 @@ var CC;
 
         CordovaFacebook.prototype.info = function (successcb, failcb) {
             window.cordova.exec(function (response) {
-                console.log("info call successful " + response);
+                console.log("info call successful " + response);                
                 if (successcb)
                     successcb(response);
             }, function (err) {
