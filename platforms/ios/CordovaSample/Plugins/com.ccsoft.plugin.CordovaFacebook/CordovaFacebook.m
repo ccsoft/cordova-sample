@@ -267,15 +267,43 @@ static NSMutableArray *publishPermissions;
      }];
 }
 
-- (void)feed:(CDVInvokedUrlCommand*)command
+- (void)share:(CDVInvokedUrlCommand*)command
 {
-    if([FBSession.activeSession isOpen] == NO) { // not have a session to post
-        CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"no active session"];
-        [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
-        return;
+    FBShareDialogParams *params = [[FBShareDialogParams alloc] init];
+    params.name = [command.arguments objectAtIndex:0];
+    params.link = [NSURL URLWithString:[command.arguments objectAtIndex:1]];
+    params.picture = [NSURL URLWithString:[command.arguments objectAtIndex:2]];
+    params.caption = [command.arguments objectAtIndex:3];
+    params.description = [command.arguments objectAtIndex:4];
+    BOOL canShare = [FBDialogs canPresentShareDialogWithParams:params];
+    if (canShare) {
+        // FBDialogs call to open Share dialog
+        [FBDialogs presentShareDialogWithParams:params
+                                    clientState:nil
+                                        handler:^(FBAppCall *call, NSDictionary *results, NSError *error) {
+                                            CDVPluginResult* pluginResult = nil;
+                                            if(error) {
+                                                NSLog(@"Error sharing: %@", error.description);
+                                                pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:error.description];
+                                            } else {
+                                                // Check if cancel info is returned and log the event
+                                                if (results[@"completionGesture"] &&
+                                                    [results[@"completionGesture"] isEqualToString:@"cancel"]) {
+                                                    NSLog(@"User canceled story publishing.");
+                                                    pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"user cancelled"];
+                                                } else {
+                                                    NSLog(@"Share Success: %@", results);
+                                                    pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+                                                }
+                                            }
+                                            [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+                                        }];
+    } else {
+        // falback to feed dialog (user does not have FB app installed)
+        [self feed:command];
     }
     
-    // if need publish permissions
+/*    // if need publish permissions
     if(publishPermissions.count > 0 && [CordovaFacebook activeSessionHasPermissions:publishPermissions] == NO) {
             [FBSession.activeSession requestNewPublishPermissions:publishPermissions
                               defaultAudience:FBSessionDefaultAudienceEveryone
@@ -297,12 +325,71 @@ static NSMutableArray *publishPermissions;
         // do feed post now
         [self post:command];
     }
+*/
 }
 
-- (void)post:(CDVInvokedUrlCommand*)command
+/**
+ * A function for parsing URL parameters.
+ */
+- (NSDictionary*)parseURLParams:(NSString *)query {
+    NSArray *pairs = [query componentsSeparatedByString:@"&"];
+    NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
+    for (NSString *pair in pairs) {
+        NSArray *kv = [pair componentsSeparatedByString:@"="];
+        NSString *val =
+        [kv[1] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        params[kv[0]] = val;
+    }
+    return params;
+}
+
+- (void)feed:(CDVInvokedUrlCommand*)command
 {
-    CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
-    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+    if([FBSession.activeSession isOpen] == NO) { // not have a session to post
+        CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"no active session"];
+        [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+        return;
+    }
+    
+    NSMutableDictionary *params =
+    [NSMutableDictionary dictionaryWithObjectsAndKeys:
+     [command.arguments objectAtIndex:0], @"name",
+     [command.arguments objectAtIndex:3], @"caption",
+     [command.arguments objectAtIndex:4], @"description",
+     [command.arguments objectAtIndex:1], @"link",
+     [command.arguments objectAtIndex:2], @"picture",
+     nil];
+    // Invoke the dialog
+    [FBWebDialogs presentFeedDialogModallyWithSession:nil
+                                           parameters:params
+                                              handler:
+     ^(FBWebDialogResult result, NSURL *resultURL, NSError *error) {
+         CDVPluginResult* pluginResult = nil;
+         if (error) {
+             // Error launching the dialog or publishing a story.
+             NSLog(@"Error publishing story.");
+             pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"feed error"];
+         } else {
+             if (result == FBWebDialogResultDialogNotCompleted) {
+                 // User clicked the "x" icon
+                 NSLog(@"User canceled story publishing.");
+                 pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"feed cancelled by user"];
+             } else {
+                 // Handle the publish feed callback
+                 NSDictionary *urlParams = [self parseURLParams:[resultURL query]];
+                 if (![urlParams valueForKey:@"post_id"]) {
+                     // User clicked the Cancel button
+                     NSLog(@"User canceled story publishing.");
+                     pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"feed cancelled by user"];
+                 } else {
+                     // User clicked the Share button
+                     NSLog(@"Posted feed: %@", urlParams);
+                     pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:urlParams];
+                 }
+             }
+         }
+         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+     }];
 }
 
 /*
