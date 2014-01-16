@@ -41,7 +41,7 @@
 		9CF159E9611E4B94B3820D01 /* CDVLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E96677874004BFCA327D6BF /* CDVLogger.m */; };
 		D4A0D8761607E02300AEF8BB /* Default-568h@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = D4A0D8751607E02300AEF8BB /* Default-568h@2x~iphone.png */; };
 		F840E1F1165FE0F500CFE078 /* config.xml in Resources */ = {isa = PBXBuildFile; fileRef = F840E1F0165FE0F500CFE078 /* config.xml */; };
-		B4D54F0D16C34EDEAFF46472 /* CordovaFacebook.m in Sources */ = {isa = PBXBuildFile; fileRef = BB6C558EC6F649D2B2334EBB /* CordovaFacebook.m */; };
+		9439A00CBFBA4CC6A94536DD /* CordovaFacebook.m in Sources */ = {isa = PBXBuildFile; fileRef = FC5FE826C4984320A48B58A7 /* CordovaFacebook.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -108,8 +108,8 @@
 		C43FE5C98DF8489F875CA55D /* CDVLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDVLogger.h; path = org.apache.cordova.console/CDVLogger.h; sourceTree = "<group>"; };
 		D4A0D8751607E02300AEF8BB /* Default-568h@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x~iphone.png"; sourceTree = "<group>"; };
 		F840E1F0165FE0F500CFE078 /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = config.xml; path = CordovaSample/config.xml; sourceTree = "<group>"; };
-		BB6C558EC6F649D2B2334EBB /* CordovaFacebook.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "CordovaFacebook.m"; path = "Plugins\com.ccsoft.plugin.CordovaFacebook\CordovaFacebook.m"; sourceTree = "<group>"; fileEncoding = 4; };
-		CE393CC6CFD240C39DB89256 /* CordovaFacebook.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "CordovaFacebook.h"; path = "Plugins\com.ccsoft.plugin.CordovaFacebook\CordovaFacebook.h"; sourceTree = "<group>"; fileEncoding = 4; };
+		FC5FE826C4984320A48B58A7 /* CordovaFacebook.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "CordovaFacebook.m"; path = "Plugins\com.ccsoft.plugin.CordovaFacebook\CordovaFacebook.m"; sourceTree = "<group>"; fileEncoding = 4; };
+		C5CAAAEF6CFC4090B4C79167 /* CordovaFacebook.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "CordovaFacebook.h"; path = "Plugins\com.ccsoft.plugin.CordovaFacebook\CordovaFacebook.h"; sourceTree = "<group>"; fileEncoding = 4; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -234,8 +234,8 @@
 				C43FE5C98DF8489F875CA55D /* CDVLogger.h */,
 				A381E5E0032B4D23ACEE2CCF /* CordovaFacebook.m */,
 				995041D94E5F48368B53E883 /* CordovaFacebook.h */,
-				BB6C558EC6F649D2B2334EBB /* CordovaFacebook.m */,
-				CE393CC6CFD240C39DB89256 /* CordovaFacebook.h */,
+				FC5FE826C4984320A48B58A7 /* CordovaFacebook.m */,
+				C5CAAAEF6CFC4090B4C79167 /* CordovaFacebook.h */,
 			);
 			name = Plugins;
 			path = CordovaSample/Plugins;
@@ -422,7 +422,7 @@
 				1D3623260D0F684500981E51 /* AppDelegate.m in Sources */,
 				302D95F114D2391D003F00A1 /* MainViewController.m in Sources */,
 				9CF159E9611E4B94B3820D01 /* CDVLogger.m in Sources */,
-				B4D54F0D16C34EDEAFF46472 /* CordovaFacebook.m in Sources */,
+				9439A00CBFBA4CC6A94536DD /* CordovaFacebook.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
