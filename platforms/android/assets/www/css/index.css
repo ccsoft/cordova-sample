@@ -50,7 +50,7 @@ body {
     background:url(../img/logo.png) no-repeat center top; /* 170px x 200px */
     position:absolute;             /* position in the center of the screen */
     left:50%;
-    top:50%;
+    top:20%;
     height:50px;                   /* text area height */
     width:225px;                   /* text area width */
     text-align:center;
@@ -112,4 +112,27 @@ h1 {
 .blink {
     animation:fade 3000ms infinite;
     -webkit-animation:fade 3000ms infinite;
+}
+
+a.btn {
+    color: #eee;
+    border: 1px solid #ccc;
+    -webkit-border-radius: 6px;
+    -webkit-tap-highlight-color: green;
+    border-radius: 6px;
+    text-align:center;
+    display:block;
+    background:#25a0ca;
+    height: 60px;
+    line-height: 60px;
+    width:80%;
+    margin: 30px auto;
+    font-size:1.2em;
+    font-weight: bold;
+    padding: .25em 0;
+    text-decoration:none;
+}
+
+a.btn:active {
+  color: green;
 }

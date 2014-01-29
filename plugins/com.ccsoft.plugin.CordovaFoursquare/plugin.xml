@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	id="com.ccsoft.plugin.CordovaFoursquare"
+	version="1.0.0">
+
+	<name>CordovaFoursquare</name>
+  <description>Cordova plugin that handles Foursquare integration in mobile apps.</description>
+  <author>CCSoft</author>
+  <keywords>foursquare,cordova,ccsoft</keywords>
+  <license>Apache 2.0 License</license>
+
+    <engines>
+      <engine name="cordova" version=">=3.0.0" />
+    </engines>
+  
+	<asset src="www/CordovaFoursquare.js" target="plugins/CordovaFoursquare.js" />
+
+	<!-- android -->
+	<platform name="android">
+    
+		<source-file src="src/android/CordovaFoursquare.java" 
+                 target-dir="src/com/ccsoft/plugin" />		
+    
+		<config-file target="AndroidManifest.xml" parent="/*">
+		  <uses-permission android:name="android.permission.INTERNET"/>
+		</config-file>
+		
+		<config-file target="AndroidManifest.xml" parent="/*/application">
+			<activity android:name="com.foursquare.android.nativeoauth.TokenExchangeActivity" android:theme="@android:style/Theme.Dialog" />      
+		</config-file>
+		
+		<config-file target="config.xml" parent="/*">
+			<feature name="CordovaFoursquare">
+				<param name="android-package" value="com.ccsoft.plugin.CordovaFoursquare" />
+			</feature>		
+		</config-file>
+
+	</platform>
+    
+    <!-- <platform name="ios">
+        
+        <config-file target="config.xml" parent="/*">
+            <feature name="CordovaFoursquare">
+                <param name="ios-package" value="CordovaFoursquare" />
+            </feature>
+        </config-file>
+        <header-file src="src/ios/CordovaFoursquare.h" />
+        <source-file src="src/ios/CordovaFoursquare.m" />
+        
+    </platform> -->
+
+
+</plugin>
+
