@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		1D3623260D0F684500981E51 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* AppDelegate.m */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
@@ -27,6 +28,7 @@
 		30FC414916E50CA1004E6F35 /* icon-72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 30FC414816E50CA1004E6F35 /* icon-72@2x.png */; };
 		572A81BD18990A48009233A5 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 572A81BC18990A48009233A5 /* StoreKit.framework */; };
 		572A81C21899406C009233A5 /* FSOAuth.m in Sources */ = {isa = PBXBuildFile; fileRef = 572A81C11899406C009233A5 /* FSOAuth.m */; };
+		574E7E16189946C5003F274F /* CordovaFoursquare.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B3E8ABD7FB640BEB74FE12F /* CordovaFoursquare.m */; };
 		5AEE5B35173C68D80009041E /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AEE5B34173C68D80009041E /* CoreLocation.framework */; };
 		5B1594DD16A7569C00FEF299 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B1594DC16A7569C00FEF299 /* AssetsLibrary.framework */; };
 		7E7966DE1810823500FA85AD /* icon-40.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E7966D41810823500FA85AD /* icon-40.png */; };
@@ -42,7 +44,6 @@
 		D4A0D8761607E02300AEF8BB /* Default-568h@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = D4A0D8751607E02300AEF8BB /* Default-568h@2x~iphone.png */; };
 		DE05128FCA384BD8B6716165 /* CDVLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = AE91027B28D8466696B3A865 /* CDVLogger.m */; };
 		F840E1F1165FE0F500CFE078 /* config.xml in Resources */ = {isa = PBXBuildFile; fileRef = F840E1F0165FE0F500CFE078 /* config.xml */; };
-		EF2828E578FF4EF2BFF86203 /* CordovaFoursquare.m in Sources */ = {isa = PBXBuildFile; fileRef = ECFA721074BD452E95782AF1 /* CordovaFoursquare.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -111,8 +112,6 @@
 		D4A0D8751607E02300AEF8BB /* Default-568h@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x~iphone.png"; sourceTree = "<group>"; };
 		EF5B2D3A6BA6426DB0363DC3 /* CDVLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDVLogger.h; path = org.apache.cordova.console/CDVLogger.h; sourceTree = "<group>"; };
 		F840E1F0165FE0F500CFE078 /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = config.xml; path = CordovaSample/config.xml; sourceTree = "<group>"; };
-		ECFA721074BD452E95782AF1 /* CordovaFoursquare.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "CordovaFoursquare.m"; path = "Plugins\com.ccsoft.plugin.CordovaFoursquare\CordovaFoursquare.m"; sourceTree = "<group>"; fileEncoding = 4; };
-		439BD318EB734631B7D51D99 /* CordovaFoursquare.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "CordovaFoursquare.h"; path = "Plugins\com.ccsoft.plugin.CordovaFoursquare\CordovaFoursquare.h"; sourceTree = "<group>"; fileEncoding = 4; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -239,8 +238,6 @@
 				EF5B2D3A6BA6426DB0363DC3 /* CDVLogger.h */,
 				4B3E8ABD7FB640BEB74FE12F /* CordovaFoursquare.m */,
 				474AA9D7DA0E47E3A22D63F4 /* CordovaFoursquare.h */,
-				ECFA721074BD452E95782AF1 /* CordovaFoursquare.m */,
-				439BD318EB734631B7D51D99 /* CordovaFoursquare.h */,
 			);
 			name = Plugins;
 			path = CordovaSample/Plugins;
@@ -426,9 +423,9 @@
 				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
 				1D3623260D0F684500981E51 /* AppDelegate.m in Sources */,
 				572A81C21899406C009233A5 /* FSOAuth.m in Sources */,
+				574E7E16189946C5003F274F /* CordovaFoursquare.m in Sources */,
 				302D95F114D2391D003F00A1 /* MainViewController.m in Sources */,
 				DE05128FCA384BD8B6716165 /* CDVLogger.m in Sources */,
-				EF2828E578FF4EF2BFF86203 /* CordovaFoursquare.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

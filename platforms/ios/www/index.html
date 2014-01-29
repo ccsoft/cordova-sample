@@ -33,9 +33,15 @@
                 <p class="event listening">Connecting to Device</p>
                 <p class="event received">Device is Ready</p>
             </div>
+            <div id="plugindemo">
+                <h3>CordovaFoursquare Plugin</h3>
+                <a href="#" class="btn" onclick="plugin.login('YOUR_4SQ_CLIENTID', 'YOUR_OPTIONAL_4SQ_SECRET', 'cordovasample://foursquare');">login</a>
+				<a href="#" class="btn" onclick="plugin.install();">install app</a>
+            </div>
         </div>
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
+        <script type="text/javascript" src="plugins/CordovaFoursquare.js"></script>
         <script type="text/javascript">
             app.initialize();
         </script>
