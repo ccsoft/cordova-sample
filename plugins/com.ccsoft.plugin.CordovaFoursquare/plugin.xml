@@ -38,7 +38,7 @@
 
 	</platform>
     
-    <!-- <platform name="ios">
+    <platform name="ios">
         
         <config-file target="config.xml" parent="/*">
             <feature name="CordovaFoursquare">
@@ -48,7 +48,7 @@
         <header-file src="src/ios/CordovaFoursquare.h" />
         <source-file src="src/ios/CordovaFoursquare.m" />
         
-    </platform> -->
+    </platform>
 
 
 </plugin>
