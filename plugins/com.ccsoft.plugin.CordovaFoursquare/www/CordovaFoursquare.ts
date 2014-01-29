@@ -1,7 +1,7 @@
 module CC {
     export class CordovaFoursquare {
         
-        login(clientId: string, clientSecret: string, successcb?: (r: any) => void, failcb?: (err: any) => void) {
+        login(clientId: string, clientSecret: string, callbackUri: string, successcb?: (r: any) => void, failcb?: (err: any) => void) {
             if (!(<any>window).cordova) {
                 if (failcb) failcb("no cordova");
                 return;
@@ -14,7 +14,7 @@ module CC {
                 (err) => {
                     console.log("login call failed with error: " + err);
                     if (failcb) failcb(err);
-                }, "CordovaFoursquare", "login", [clientId, clientSecret]);
+                }, "CordovaFoursquare", "login", [clientId, clientSecret, callbackUri]);
         }
         
         install(successcb?: (r: any) => void, failcb?: (err: any) => void) {

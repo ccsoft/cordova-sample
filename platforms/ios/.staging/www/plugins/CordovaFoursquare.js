@@ -3,7 +3,7 @@ var CC;
     var CordovaFoursquare = (function () {
         function CordovaFoursquare() {
         }
-        CordovaFoursquare.prototype.login = function (clientId, clientSecret, successcb, failcb) {
+        CordovaFoursquare.prototype.login = function (clientId, clientSecret, callbackUri, successcb, failcb) {
             if (!window.cordova) {
                 if (failcb)
                     failcb("no cordova");
@@ -17,7 +17,7 @@ var CC;
                 console.log("login call failed with error: " + err);
                 if (failcb)
                     failcb(err);
-            }, "CordovaFoursquare", "login", [clientId, clientSecret]);
+            }, "CordovaFoursquare", "login", [clientId, clientSecret, callbackUri]);
         };
 
         CordovaFoursquare.prototype.install = function (successcb, failcb) {
