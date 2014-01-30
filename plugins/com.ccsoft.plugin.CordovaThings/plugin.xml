@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	id="com.ccsoft.plugin.CordovaThings"
+	version="1.0.0">
+
+	<name>CordovaThings</name>
+	<description>
+		Cordova plugin that handles several neat things. A collection which will probably get richer in time.
+		We also provide TypeScript source file together with the JavaScript for the client side with this plugin.
+	</description>
+	<author>CCSoft</author>
+	<keywords>app version, bundle, package, cordova, ccsoft</keywords>
+	<license>Apache 2.0 License</license>
+
+    <engines>
+      <engine name="cordova" version=">=3.0.0" />
+    </engines>
+  
+	<asset src="www/CordovaThings.js" target="plugins/CordovaThings.js" />
+
+	<!-- android -->
+	<platform name="android">
+    
+		<source-file src="src/android/CordovaThings.java" 
+                 target-dir="src/com/ccsoft/plugin" />		
+		
+		<config-file target="config.xml" parent="/*">
+			<feature name="CordovaThings">
+				<param name="android-package" value="com.ccsoft.plugin.CordovaThings" />
+			</feature>		
+		</config-file>
+
+	</platform>
+    
+	<!-- ios -->
+    <platform name="ios">
+        
+        <config-file target="config.xml" parent="/*">
+            <feature name="CordovaThings">
+                <param name="ios-package" value="CordovaThings" />
+            </feature>
+        </config-file>
+        <header-file src="src/ios/CordovaThings.h" />
+        <source-file src="src/ios/CordovaThings.m" />
+        
+    </platform>
+
+</plugin>
+
