@@ -33,9 +33,14 @@
                 <p class="event listening">Connecting to Device</p>
                 <p class="event received">Device is Ready</p>
             </div>
+            <div id="plugindemo">
+                <h3>CordovaThings Plugin</h3>
+                <a href="#" class="btn" onclick="plugin.getAppVersion(function(version) { console.log(version);});">App Version</a>
+            </div>
         </div>
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
+        <script type="text/javascript" src="plugins/CordovaThings.js"></script>
         <script type="text/javascript">
             app.initialize();
         </script>
