@@ -1,4 +1,4 @@
-var CC;
+cordova.define("com.ccsoft.plugin.CordovaFacebook.CordovaFacebook", function(require, exports, module) {var CC;
 (function (CC) {
     var CordovaFacebook = (function () {
         function CordovaFacebook() {
@@ -110,3 +110,6 @@ var CC;
     })();
     CC.CordovaFacebook = CordovaFacebook;
 })(CC || (CC = {}));
+
+module.exports = CC;
+});

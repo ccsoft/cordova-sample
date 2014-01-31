@@ -13,6 +13,13 @@ module.exports = [
         "clobbers": [
             "cordova.logger"
         ]
+    },
+    {
+        "file": "plugins/com.ccsoft.plugin.CordovaFacebook/www/CordovaFacebook.js",
+        "id": "com.ccsoft.plugin.CordovaFacebook.CordovaFacebook",
+        "merges": [
+            "CC"
+        ]
     }
 ]
 });
