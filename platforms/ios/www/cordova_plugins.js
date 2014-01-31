@@ -13,6 +13,13 @@ module.exports = [
         "clobbers": [
             "cordova.logger"
         ]
+    },
+    {
+        "file": "plugins/com.ccsoft.plugin.CordovaThings/www/CordovaThings.js",
+        "id": "com.ccsoft.plugin.CordovaThings.CordovaThings",
+        "merges": [
+            "CC"
+        ]
     }
 ]
 });

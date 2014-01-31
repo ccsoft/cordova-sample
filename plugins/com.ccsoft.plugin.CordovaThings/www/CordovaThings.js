@@ -21,3 +21,5 @@ var CC;
     })();
     CC.CordovaThings = CordovaThings;
 })(CC || (CC = {}));
+
+module.exports = CC;

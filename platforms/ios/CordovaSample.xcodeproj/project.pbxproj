@@ -40,7 +40,7 @@
 		D4A0D8761607E02300AEF8BB /* Default-568h@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = D4A0D8751607E02300AEF8BB /* Default-568h@2x~iphone.png */; };
 		F840E1F1165FE0F500CFE078 /* config.xml in Resources */ = {isa = PBXBuildFile; fileRef = F840E1F0165FE0F500CFE078 /* config.xml */; };
 		DE05128FCA384BD8B6716165 /* CDVLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = AE91027B28D8466696B3A865 /* CDVLogger.m */; };
-		DAFFB924AF6D4438A16E459E /* CordovaThings.m in Sources */ = {isa = PBXBuildFile; fileRef = 5043F70F723B4C9DBCFF3C1B /* CordovaThings.m */; };
+		705B38247F684C2DB619CFAC /* CordovaThings.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DF6514A6FD543C9BFA292BD /* CordovaThings.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -104,8 +104,8 @@
 		F840E1F0165FE0F500CFE078 /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = config.xml; path = "CordovaSample/config.xml"; sourceTree = "<group>"; };
 		AE91027B28D8466696B3A865 /* CDVLogger.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "CDVLogger.m"; path = "org.apache.cordova.console/CDVLogger.m"; sourceTree = "<group>"; fileEncoding = 4; };
 		EF5B2D3A6BA6426DB0363DC3 /* CDVLogger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "CDVLogger.h"; path = "org.apache.cordova.console/CDVLogger.h"; sourceTree = "<group>"; fileEncoding = 4; };
-		5043F70F723B4C9DBCFF3C1B /* CordovaThings.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "CordovaThings.m"; path = "com.ccsoft.plugin.CordovaThings/CordovaThings.m"; sourceTree = "<group>"; fileEncoding = 4; };
-		8C0695FE1CF3471F8FA99D6E /* CordovaThings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "CordovaThings.h"; path = "com.ccsoft.plugin.CordovaThings/CordovaThings.h"; sourceTree = "<group>"; fileEncoding = 4; };
+		6DF6514A6FD543C9BFA292BD /* CordovaThings.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "CordovaThings.m"; path = "Plugins\com.ccsoft.plugin.CordovaThings\CordovaThings.m"; sourceTree = "<group>"; fileEncoding = 4; };
+		6AA65D8126554ABBAD9A1DC6 /* CordovaThings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "CordovaThings.h"; path = "Plugins\com.ccsoft.plugin.CordovaThings\CordovaThings.h"; sourceTree = "<group>"; fileEncoding = 4; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -226,8 +226,8 @@
 			children = (
 				AE91027B28D8466696B3A865 /* CDVLogger.m */,
 				EF5B2D3A6BA6426DB0363DC3 /* CDVLogger.h */,
-				5043F70F723B4C9DBCFF3C1B /* CordovaThings.m */,
-				8C0695FE1CF3471F8FA99D6E /* CordovaThings.h */,
+				6DF6514A6FD543C9BFA292BD /* CordovaThings.m */,
+				6AA65D8126554ABBAD9A1DC6 /* CordovaThings.h */,
 			);
 			name = Plugins;
 			path = "CordovaSample/Plugins";
@@ -414,7 +414,7 @@
 				1D3623260D0F684500981E51 /* AppDelegate.m in Sources */,
 				302D95F114D2391D003F00A1 /* MainViewController.m in Sources */,
 				DE05128FCA384BD8B6716165 /* CDVLogger.m in Sources */,
-				DAFFB924AF6D4438A16E459E /* CordovaThings.m in Sources */,
+				705B38247F684C2DB619CFAC /* CordovaThings.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

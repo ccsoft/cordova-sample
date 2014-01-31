@@ -1,4 +1,4 @@
-var CC;
+cordova.define("com.ccsoft.plugin.CordovaThings.CordovaThings", function(require, exports, module) {var CC;
 (function (CC) {
     var CordovaThings = (function () {
         function CordovaThings() {
@@ -21,3 +21,6 @@ var CC;
     })();
     CC.CordovaThings = CordovaThings;
 })(CC || (CC = {}));
+
+module.exports = CC;
+});
