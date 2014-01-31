@@ -40,3 +40,5 @@ var CC;
     })();
     CC.CordovaFoursquare = CordovaFoursquare;
 })(CC || (CC = {}));
+
+module.exports = CC;

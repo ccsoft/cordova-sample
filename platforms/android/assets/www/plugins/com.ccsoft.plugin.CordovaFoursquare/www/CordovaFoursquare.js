@@ -1,4 +1,4 @@
-var CC;
+cordova.define("com.ccsoft.plugin.CordovaFoursquare.CordovaFoursquare", function(require, exports, module) {var CC;
 (function (CC) {
     var CordovaFoursquare = (function () {
         function CordovaFoursquare() {
@@ -40,3 +40,6 @@ var CC;
     })();
     CC.CordovaFoursquare = CordovaFoursquare;
 })(CC || (CC = {}));
+
+module.exports = CC;
+});

@@ -13,6 +13,13 @@ module.exports = [
         "clobbers": [
             "cordova.logger"
         ]
+    },
+    {
+        "file": "plugins/com.ccsoft.plugin.CordovaFoursquare/www/CordovaFoursquare.js",
+        "id": "com.ccsoft.plugin.CordovaFoursquare.CordovaFoursquare",
+        "merges": [
+            "CC"
+        ]
     }
 ]
 });
