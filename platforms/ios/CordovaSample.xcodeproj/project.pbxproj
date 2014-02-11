@@ -5,7 +5,6 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		1D3623260D0F684500981E51 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* AppDelegate.m */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
@@ -26,7 +25,6 @@
 		308D05391370CCF300D202BF /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 308D05301370CCF300D202BF /* icon@2x.png */; };
 		30A0434814DC770100060A13 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 30A0434314DC770100060A13 /* Localizable.strings */; };
 		30FC414916E50CA1004E6F35 /* icon-72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 30FC414816E50CA1004E6F35 /* icon-72@2x.png */; };
-		574E7E4518A4EC90003F274F /* CordovaFacebook.m in Sources */ = {isa = PBXBuildFile; fileRef = A381E5E0032B4D23ACEE2CCF /* CordovaFacebook.m */; };
 		578C38571877025200B74D40 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 578C38561877025200B74D40 /* FacebookSDK.framework */; };
 		5AEE5B35173C68D80009041E /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AEE5B34173C68D80009041E /* CoreLocation.framework */; };
 		5B1594DD16A7569C00FEF299 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B1594DC16A7569C00FEF299 /* AssetsLibrary.framework */; };
@@ -43,6 +41,7 @@
 		9CF159E9611E4B94B3820D01 /* CDVLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E96677874004BFCA327D6BF /* CDVLogger.m */; };
 		D4A0D8761607E02300AEF8BB /* Default-568h@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = D4A0D8751607E02300AEF8BB /* Default-568h@2x~iphone.png */; };
 		F840E1F1165FE0F500CFE078 /* config.xml in Resources */ = {isa = PBXBuildFile; fileRef = F840E1F0165FE0F500CFE078 /* config.xml */; };
+		BF8EB885D63347D8B439F118 /* CordovaFacebook.m in Sources */ = {isa = PBXBuildFile; fileRef = BA57E9AFD2F04B0688627F1F /* CordovaFacebook.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -109,6 +108,8 @@
 		C43FE5C98DF8489F875CA55D /* CDVLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDVLogger.h; path = org.apache.cordova.console/CDVLogger.h; sourceTree = "<group>"; };
 		D4A0D8751607E02300AEF8BB /* Default-568h@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x~iphone.png"; sourceTree = "<group>"; };
 		F840E1F0165FE0F500CFE078 /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = config.xml; path = CordovaSample/config.xml; sourceTree = "<group>"; };
+		BA57E9AFD2F04B0688627F1F /* CordovaFacebook.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "CordovaFacebook.m"; path = "Plugins\com.ccsoft.plugin.CordovaFacebook\CordovaFacebook.m"; sourceTree = "<group>"; fileEncoding = 4; };
+		B0699B42F4CC4F4D94766D33 /* CordovaFacebook.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "CordovaFacebook.h"; path = "Plugins\com.ccsoft.plugin.CordovaFacebook\CordovaFacebook.h"; sourceTree = "<group>"; fileEncoding = 4; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -233,6 +234,8 @@
 				C43FE5C98DF8489F875CA55D /* CDVLogger.h */,
 				A381E5E0032B4D23ACEE2CCF /* CordovaFacebook.m */,
 				995041D94E5F48368B53E883 /* CordovaFacebook.h */,
+				BA57E9AFD2F04B0688627F1F /* CordovaFacebook.m */,
+				B0699B42F4CC4F4D94766D33 /* CordovaFacebook.h */,
 			);
 			name = Plugins;
 			path = CordovaSample/Plugins;
@@ -415,11 +418,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				574E7E4518A4EC90003F274F /* CordovaFacebook.m in Sources */,
 				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
 				1D3623260D0F684500981E51 /* AppDelegate.m in Sources */,
 				302D95F114D2391D003F00A1 /* MainViewController.m in Sources */,
 				9CF159E9611E4B94B3820D01 /* CDVLogger.m in Sources */,
+				BF8EB885D63347D8B439F118 /* CordovaFacebook.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
