@@ -1,4 +1,4 @@
-var CC;
+cordova.define("com.ccsoft.plugin.CordovaFacebook.CordovaFacebook", function(require, exports, module) {var CC;
 (function (CC) {
     var CordovaFacebook = (function () {
         function CordovaFacebook() {
@@ -11,6 +11,12 @@ var CC;
             }
             window.cordova.exec(function (response) {
                 console.log("init call successful " + response);
+                console.log(response.accessToken);
+                console.log(response.expirationDate);
+                console.log(response.permissions);
+                for (var i = 0; i < response.permissions.length; i++) {
+                    console.log(response.permissions[i]);
+                }
                 if (successcb)
                     successcb(response);
             }, function (err) {
@@ -130,3 +136,4 @@ var CC;
 })(CC || (CC = {}));
 
 module.exports = CC;
+});

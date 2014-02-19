@@ -11,6 +11,12 @@ cordova.define("com.ccsoft.plugin.CordovaFacebook.CordovaFacebook", function(req
             }
             window.cordova.exec(function (response) {
                 console.log("init call successful " + response);
+                console.log(response.accessToken);
+                console.log(response.expirationDate);
+                console.log(response.permissions);
+                for (var i = 0; i < response.permissions.length; i++) {
+                    console.log(response.permissions[i]);
+                }
                 if (successcb)
                     successcb(response);
             }, function (err) {
