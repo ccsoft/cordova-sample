@@ -1,4 +1,4 @@
-cordova.define("com.ccsoft.plugin.CordovaFacebook.CordovaFacebook", function(require, exports, module) {var CC;
+var CC;
 (function (CC) {
     var CordovaFacebook = (function () {
         function CordovaFacebook() {
@@ -10,13 +10,6 @@ cordova.define("com.ccsoft.plugin.CordovaFacebook.CordovaFacebook", function(req
                 return;
             }
             window.cordova.exec(function (response) {
-                console.log("init call successful " + response);
-                console.log(response.accessToken);
-                console.log(response.expirationDate);
-                console.log(response.permissions);
-                for (var i = 0; i < response.permissions.length; i++) {
-                    console.log(response.permissions[i]);
-                }
                 if (successcb)
                     successcb(response);
             }, function (err) {
@@ -33,7 +26,6 @@ cordova.define("com.ccsoft.plugin.CordovaFacebook.CordovaFacebook", function(req
                 return;
             }
             window.cordova.exec(function (response) {
-                console.log("login call successful " + response);
                 if (successcb)
                     successcb(response);
             }, function (err) {
@@ -48,7 +40,6 @@ cordova.define("com.ccsoft.plugin.CordovaFacebook.CordovaFacebook", function(req
                 return;
             }
             window.cordova.exec(function (response) {
-                console.log("logout call successful");
                 if (successcb)
                     successcb(response);
             }, function (err) {
@@ -63,7 +54,6 @@ cordova.define("com.ccsoft.plugin.CordovaFacebook.CordovaFacebook", function(req
                 return;
             }
             window.cordova.exec(function (response) {
-                console.log("info call successful " + response);
                 if (successcb)
                     successcb(response);
             }, function (err) {
@@ -80,7 +70,6 @@ cordova.define("com.ccsoft.plugin.CordovaFacebook.CordovaFacebook", function(req
                 return;
             }
             window.cordova.exec(function (response) {
-                console.log("feed call successful: " + response.post_id);
                 if (successcb) {
                     if (response && response.post_id) {
                         successcb(response.post_id);
@@ -102,7 +91,6 @@ cordova.define("com.ccsoft.plugin.CordovaFacebook.CordovaFacebook", function(req
                 return;
             }
             window.cordova.exec(function (response) {
-                console.log("share call successful: " + response);
                 if (successcb) {
                     successcb();
                 }
@@ -120,7 +108,6 @@ cordova.define("com.ccsoft.plugin.CordovaFacebook.CordovaFacebook", function(req
                 return;
             }
             window.cordova.exec(function (response) {
-                console.log("invite call successful: " + response);
                 if (successcb) {
                     successcb(response);
                 }
@@ -136,4 +123,3 @@ cordova.define("com.ccsoft.plugin.CordovaFacebook.CordovaFacebook", function(req
 })(CC || (CC = {}));
 
 module.exports = CC;
-});

@@ -27,7 +27,7 @@
 		30A0434814DC770100060A13 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 30A0434314DC770100060A13 /* Localizable.strings */; };
 		30FC414916E50CA1004E6F35 /* icon-72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 30FC414816E50CA1004E6F35 /* icon-72@2x.png */; };
 		578C38571877025200B74D40 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 578C38561877025200B74D40 /* FacebookSDK.framework */; };
-		57BFA3D118B4A8AC000246B0 /* CordovaFacebook.m in Sources */ = {isa = PBXBuildFile; fileRef = A381E5E0032B4D23ACEE2CCF /* CordovaFacebook.m */; };
+		57BFA3D418B7D06F000246B0 /* CordovaFacebook.m in Sources */ = {isa = PBXBuildFile; fileRef = A381E5E0032B4D23ACEE2CCF /* CordovaFacebook.m */; };
 		5AEE5B35173C68D80009041E /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AEE5B34173C68D80009041E /* CoreLocation.framework */; };
 		5B1594DD16A7569C00FEF299 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B1594DC16A7569C00FEF299 /* AssetsLibrary.framework */; };
 		7E7966DE1810823500FA85AD /* icon-40.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E7966D41810823500FA85AD /* icon-40.png */; };
@@ -415,7 +415,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				57BFA3D118B4A8AC000246B0 /* CordovaFacebook.m in Sources */,
+				57BFA3D418B7D06F000246B0 /* CordovaFacebook.m in Sources */,
 				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
 				1D3623260D0F684500981E51 /* AppDelegate.m in Sources */,
 				302D95F114D2391D003F00A1 /* MainViewController.m in Sources */,
