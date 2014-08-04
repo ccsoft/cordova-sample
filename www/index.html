@@ -35,10 +35,10 @@
             </div>
             <div id="plugindemo">
                 <h3>CordovaFacebook Plugin</h3>
-                <a href="#" class="btn" onclick="plugin.init('504099699711238', 'CordovaSample', ['basic_info', 'email', 'publish_actions']);">init</a>
-                <a href="#" class="btn" onclick="plugin.login();">login</a>
-                <a href="#" class="btn" onclick="plugin.info();">info</a>
-				<a href="#" class="btn" onclick="plugin.invite('Invite texts should be inviting', 'CordovaSample');">invite</a>
+                <a href="#" class="btn" onclick="plugin.init('504099699711238', 'CordovaSample', ['public_profile', 'email', 'publish_actions'], function(resp) { if(resp) { alert('accessToken: ' + resp.accessToken + '\n\nexpires: ' + resp.expirationDate + '\n\npermissions: ' + resp.permissions); } }, function(err) {console.log(err); }  );">init</a>
+                <a href="#" class="btn" onclick="plugin.login(function(resp) { if(resp) { alert('accessToken: ' + resp.accessToken + '\n\nexpires: ' + resp.expirationDate + '\n\npermissions: ' + resp.permissions); } }, function(err) {console.log(err); });">login</a>
+                <a href="#" class="btn" onclick="plugin.info(function(data) { alert('User Id: ' + data.id + '\nName: ' + data.name + '\nEmail: ' + data.email); }, function(err) { console.log(err); });">info</a>
+				<a href="#" class="btn" onclick="plugin.invite('Invite texts should be inviting');">invite</a>
                 <a href="#" class="btn" onclick="plugin.share('Test', 'http://www.example.com', 'http://www.example.com/test.png', 'Test feed caption', 'Test feed description.');">share</a>
                 <a href="#" class="btn" onclick="plugin.logout();">logout</a>
             </div>
