@@ -54,6 +54,7 @@ public class CordovaFacebook extends CordovaPlugin {
 			    .setAppId(args.getString(0))
 			    .setNamespace(args.getString(1))
 			    .setPermissions(perms)
+			    .setAskForAllPermissionsAtOnce(true)
 			    .build();
 
 			SimpleFacebook.setConfiguration(facebookConfiguration);
@@ -230,7 +231,7 @@ public class CordovaFacebook extends CordovaPlugin {
 
         	Runnable runnable = new Runnable() {
     			public void run() {
-    				mSimpleFacebook.publish(feed, onPublishListener);
+    				mSimpleFacebook.publish(feed, true, onPublishListener);
     			};
     		};
     		cordova.getActivity().runOnUiThread(runnable);
