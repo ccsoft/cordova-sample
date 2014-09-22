@@ -22,9 +22,6 @@
     <feature name="Console">
         <param name="ios-package" value="CDVLogger" />
     </feature>
-    <feature name="CordovaFacebook">
-        <param name="ios-package" value="CordovaFacebook" />
-    </feature>
     <name>CordovaSample</name>
     <description>
         A sample Apache Cordova application that responds to the deviceready event.
@@ -38,4 +35,7 @@
     <preference name="webviewbounce" value="true" />
     <preference name="BackupWebStorage" value="local" />
     <preference name="DisallowOverscroll" value="true" />
+    <feature name="CordovaFacebook">
+        <param name="ios-package" value="CordovaFacebook" />
+    </feature>
 </widget>

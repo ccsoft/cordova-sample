@@ -12,14 +12,7 @@ import org.json.JSONObject;
 import com.facebook.Session;
 import com.sromku.simple.fb.Permission;
 import com.sromku.simple.fb.SimpleFacebook;
-/*
-import com.sromku.simple.fb.SimpleFacebook.OnInviteListener;
-import com.sromku.simple.fb.SimpleFacebook.OnLogoutListener;
-import com.sromku.simple.fb.SimpleFacebook.OnProfileRequestListener;
-import com.sromku.simple.fb.SimpleFacebook.OnPublishListener;
-*/
 import com.sromku.simple.fb.SimpleFacebookConfiguration;
-//import com.sromku.simple.fb.SimpleFacebook.OnLoginListener;
 import com.sromku.simple.fb.entities.Feed;
 import com.sromku.simple.fb.entities.Profile;
 import com.sromku.simple.fb.listeners.OnInviteListener;
@@ -61,6 +54,7 @@ public class CordovaFacebook extends CordovaPlugin {
 			    .setAppId(args.getString(0))
 			    .setNamespace(args.getString(1))
 			    .setPermissions(perms)
+			    .setAskForAllPermissionsAtOnce(true)
 			    .build();
 
 			SimpleFacebook.setConfiguration(facebookConfiguration);
@@ -237,7 +231,7 @@ public class CordovaFacebook extends CordovaPlugin {
 
         	Runnable runnable = new Runnable() {
     			public void run() {
-    				mSimpleFacebook.publish(feed, onPublishListener);
+    				mSimpleFacebook.publish(feed, true, onPublishListener);
     			};
     		};
     		cordova.getActivity().runOnUiThread(runnable);
