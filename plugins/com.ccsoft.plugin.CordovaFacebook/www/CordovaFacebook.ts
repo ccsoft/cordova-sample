@@ -1,5 +1,7 @@
+/// <reference path='CordovaFacebook.d.ts' />
+
 module CC {
-    export class CordovaFacebook {
+    export class CordovaFacebook implements ICordovaFacebook {
         
         init(appId: string, appNamespace: string, appPermissions: string[], successcb?: (r: any) => void, failcb?: (err: any) => void) {
             if (!(<any>window).cordova) {
@@ -112,6 +114,21 @@ module CC {
                     console.log("invite call failed with error: " + err);
                     if (failcb) failcb(err);
                 }, "CordovaFacebook", "invite", [message, title]);            
+        }
+
+        deleteRequest(request: string, successcb?: () => void, failcb?: (err: any) => void) {
+            if (!(<any>window).cordova) {
+                if (failcb) failcb("no cordova");
+                return;
+            }
+            (<any>window).cordova.exec(
+                () => {
+                    if (successcb) successcb();
+                },
+                (err) => {
+                    console.error("deleteRequest call failed with error: " + err);
+                    if (failcb) failcb(err);
+                }, "CordovaFacebook", "deleteRequest", [request]);
         }
     }
 }

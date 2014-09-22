@@ -19,6 +19,9 @@
     <feature name="LocalStorage">
         <param name="ios-package" value="CDVLocalStorage" />
     </feature>
+    <feature name="CordovaFacebook">
+        <param name="ios-package" value="CordovaFacebook" />
+    </feature>
     <feature name="Console">
         <param name="ios-package" value="CDVLogger" />
     </feature>
@@ -35,7 +38,4 @@
     <preference name="webviewbounce" value="true" />
     <preference name="BackupWebStorage" value="local" />
     <preference name="DisallowOverscroll" value="true" />
-    <feature name="CordovaFacebook">
-        <param name="ios-package" value="CordovaFacebook" />
-    </feature>
 </widget>

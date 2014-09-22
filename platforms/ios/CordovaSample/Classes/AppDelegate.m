@@ -93,28 +93,59 @@
 
 // this happens while we are running ( in the background, or from within our own app )
 // only valid if CordovaSample-Info.plist specifies a protocol to handle
-- (BOOL)application:(UIApplication*)application handleOpenURL:(NSURL*)url
+- (BOOL)application:(UIApplication *)application
+            openURL:(NSURL *)url
+  sourceApplication:(NSString *)sourceApplication
+         annotation:(id)annotation
 {
     if (!url) {
         return NO;
     }
-
-    // calls into javascript global function 'handleOpenURL'
-    NSString* jsString = [NSString stringWithFormat:@"handleOpenURL(\"%@\");", url];
-    [self.viewController.webView stringByEvaluatingJavaScriptFromString:jsString];
-
-    // all plugins will get the notification, and their handlers will be called
-    [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:CDVPluginHandleOpenURLNotification object:url]];
-
-    return YES;
+    
+    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                 url, @"url", sourceApplication, @"sourceApplication", @"NO", @"success", nil];
+    [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"CordovaPluginOpenURLNotification" object:self userInfo:dict]];
+    
+    NSString* success = [dict objectForKey:@"success"];
+    
+    if([success isEqualToString:@"NO"]) {
+        // calls into javascript global function 'handleOpenURL'
+        NSString* jsString = [NSString stringWithFormat:@"handleOpenURL(\"%@\");", url];
+        [self.viewController.webView stringByEvaluatingJavaScriptFromString:jsString];
+        
+        // all plugins will get the notification, and their handlers will be called
+        [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:CDVPluginHandleOpenURLNotification object:url]];
+        return YES;
+    }
+    return ![success isEqualToString:@"NO"];
 }
 
-// repost the localnotification using the default NSNotificationCenter so multiple plugins may respond
+
+// repost all remote and local notification using the default NSNotificationCenter so multiple plugins may respond
 - (void)            application:(UIApplication*)application
     didReceiveLocalNotification:(UILocalNotification*)notification
 {
     // re-post ( broadcast )
     [[NSNotificationCenter defaultCenter] postNotificationName:CDVLocalNotification object:notification];
+}
+
+- (void)                                application:(UIApplication *)application
+   didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
+{
+    // re-post ( broadcast )
+    NSString* token = [[[[deviceToken description]
+                         stringByReplacingOccurrencesOfString: @"<" withString: @""]
+                        stringByReplacingOccurrencesOfString: @">" withString: @""]
+                       stringByReplacingOccurrencesOfString: @" " withString: @""];
+
+    [[NSNotificationCenter defaultCenter] postNotificationName:CDVRemoteNotification object:token];
+}
+
+- (void)                                 application:(UIApplication *)application
+    didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
+{
+    // re-post ( broadcast )
+    [[NSNotificationCenter defaultCenter] postNotificationName:CDVRemoteNotificationError object:error];
 }
 
 - (NSUInteger)application:(UIApplication*)application supportedInterfaceOrientationsForWindow:(UIWindow*)window
@@ -128,21 +159,6 @@
 - (void)applicationDidReceiveMemoryWarning:(UIApplication*)application
 {
     [[NSURLCache sharedURLCache] removeAllCachedResponses];
-}
-
-// During the Facebook login flow, your app passes control to the Facebook iOS app or Facebook in a mobile browser.
-// After authentication, your app will be called back with the session information.
-- (BOOL)application:(UIApplication *)application
-            openURL:(NSURL *)url
-  sourceApplication:(NSString *)sourceApplication
-         annotation:(id)annotation
-{
-    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                          url, @"url", sourceApplication, @"sourceApplication", @"NO", @"success", nil];
-    [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"CordovaPluginOpenURLNotification" object:self userInfo:dict]];
-    
-    NSString* success = [dict objectForKey:@"success"];
-    return ![success isEqualToString:@"NO"];
 }
 
 @end

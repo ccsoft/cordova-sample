@@ -1,3 +1,4 @@
+/// <reference path='CordovaFacebook.d.ts' />
 var CC;
 (function (CC) {
     var CordovaFacebook = (function () {
@@ -116,6 +117,22 @@ var CC;
                 if (failcb)
                     failcb(err);
             }, "CordovaFacebook", "invite", [message, title]);
+        };
+
+        CordovaFacebook.prototype.deleteRequest = function (request, successcb, failcb) {
+            if (!window.cordova) {
+                if (failcb)
+                    failcb("no cordova");
+                return;
+            }
+            window.cordova.exec(function () {
+                if (successcb)
+                    successcb();
+            }, function (err) {
+                console.error("deleteRequest call failed with error: " + err);
+                if (failcb)
+                    failcb(err);
+            }, "CordovaFacebook", "deleteRequest", [request]);
         };
         return CordovaFacebook;
     })();
