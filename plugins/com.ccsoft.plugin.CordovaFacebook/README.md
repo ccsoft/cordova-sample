@@ -7,22 +7,14 @@ Project uses mobile native platform FacebookSDK for iOS and Android to utilize b
 
 We also provide [TypeScript](http://www.typescriptlang.org/) source and type definition files together with the JavaScript for the client side with this plugin.
 
-##Why?
-- Why do we implement another plugin since there is already an official [phonegap-facebook-plugin](https://github.com/phonegap/phonegap-facebook-plugin)?
-	1. As of today (16.01.2014), [official cordova facebook plugin](https://github.com/phonegap/phonegap-facebook-plugin) project on GitHub has 985 stars (including mine), 118 watchers, 218 open issues, 29 pull requests and 5 branches.
-	2. Last commit as of today to master branch was 3 months ago, we don't have time to wait for fixes and new updates.
-	3. Official plugin tries to retain the same interface for the Facebook JavaScript SDK, which we believe an unnecessary burden. 
-	4. We have some live apps that uses the official plugin, and we are scared to update our app to new Cordova version, scared to break things in Facebook side. 
-	5. Well, it was not that hard to do it, so we did it.
-
 ##Versions
 Sample app is built and tested with Cordova 3.5 and we only support Cordova version > 3.0.
 
 We currently tested FacebookSDK for following platforms and versions:
 
-- [FacebookSDK iOS 3.16.1](https://developers.facebook.com/docs/ios/)
+- [FacebookSDK iOS 3.18](https://developers.facebook.com/docs/ios/)
 
-- [FacebookSDK Android 3.16.0](https://developers.facebook.com/docs/android/)
+- [FacebookSDK Android 3.18](https://developers.facebook.com/docs/android/)
 
 ##Prerequisites
 
@@ -46,7 +38,7 @@ Here is what to do for Android before installing our plugin.
 
 ##Installing the plugin
 To add this plugin just type:
-```cordova plugin add https://github.com/ccsoft/cordova-facebook.git```
+```cordova plugin add https://github.com/ccsoft/cordova-facebook```
 
 To remove this plugin type:
 ```cordova plugin remove com.ccsoft.plugin.CordovaFacebook```
@@ -96,7 +88,9 @@ The plugin has the following methods:
 * [share](#share)
 * [feed](#feed)
 * [invite](#invite)
-* [deleteRequest](#deleteRequest)
+* [deleteRequest](#deleterequest)
+* [postScore](#postscore)
+* [getScores](#getscores)
 
 *** 
 
@@ -283,6 +277,58 @@ For implementation details:
 - Facebook documentation on requests with Graph API [here](https://developers.facebook.com/docs/graph-api/reference/v2.1/request) (scroll to deleting)
 - See Android (Simple Facebook) implementation details [here](https://github.com/sromku/android-simple-facebook#delete-requestinvite)
 
+***
+
+###postScore
+Post score for the user. Note that your app should be classified as a game in Facebook app settings.
+
+>####parameters
+		
+>>*score*: number: integer score value.
+
+>>*successCallback*: function: returns nothing.
+
+>>*failureCallback*: function: Called with failure reason string.
+
+>####example
+
+	plugin.postScore(score, successCallback, failureCallback);
+
+For implementation details: 
+- Facebook documentation on Scores API [here](https://developers.facebook.com/docs/games/scores)
+
+***
+
+###getScores
+Gets the score for the user and his/her friends. Note that your app should be classified as a game in Facebook app settings.
+
+>####parameters
+		
+>>*scores*: []: json array of scores, each object in array contains *score* and *user* as follows: 
+    
+>>> *score*: number; // best score of that user
+
+>>> *user.id*: string; // user id
+
+>>> *user.name*: string; // user name
+
+>>*successCallback*: function: returns nothing.
+
+>>*failureCallback*: function: Called with failure reason string.
+
+>####example
+
+	plugin.getScores(function(resp) {
+        for (var i = 0; i < resp.length; i++) {
+            console.log("Score Order: " + i);
+            console.log("User Id: " + resp[i].user.id);
+            console.log("User Name: " + resp[i].user.name);
+            console.log("Score: " + resp[i].score);
+        }		
+	}, failureCallback);
+
+For implementation details: 
+- Facebook documentation on Scores API [here](https://developers.facebook.com/docs/games/scores)
 
 ***
 
@@ -296,7 +342,14 @@ You can change your app settings (in index.html), you can also test the features
 > Pass: 123456
 
 
-
 ##License
 [Apache 2.0 License](http://www.apache.org/licenses/LICENSE-2.0.html)
+
+##Why another plugin?
+- Why do we implement another plugin since there is already an official [phonegap-facebook-plugin](https://github.com/phonegap/phonegap-facebook-plugin)?
+1. As of today (16.01.2014), [official cordova facebook plugin](https://github.com/phonegap/phonegap-facebook-plugin) project on GitHub has 985 stars (including mine), 118 watchers, 218 open issues, 29 pull requests and 5 branches.
+2. Last commit as of today to master branch was 3 months ago, we don't have time to wait for fixes and new updates.
+3. Official plugin tries to retain the same interface for the Facebook JavaScript SDK, which we believe an unnecessary burden. 
+4. We have some live apps that uses the official plugin, and we are scared to update our app to new Cordova version, scared to break things in Facebook side. 
+5. Well, it was not that hard to do it, so we did it.
 
