@@ -9,11 +9,11 @@
                 "parents": {
                     "/*": [
                         {
-                            "xml": "<feature name=\"CordovaFacebook\"><param name=\"ios-package\" value=\"CordovaFacebook\" /></feature>",
+                            "xml": "<feature name=\"Console\"><param name=\"ios-package\" value=\"CDVLogger\" /></feature>",
                             "count": 1
                         },
                         {
-                            "xml": "<feature name=\"Console\"><param name=\"ios-package\" value=\"CDVLogger\" /></feature>",
+                            "xml": "<feature name=\"CordovaFacebook\"><param name=\"ios-package\" value=\"CordovaFacebook\" /></feature>",
                             "count": 1
                         }
                     ]
@@ -22,10 +22,10 @@
         }
     },
     "installed_plugins": {
-        "com.ccsoft.plugin.CordovaFacebook": {
+        "org.apache.cordova.console": {
             "PACKAGE_NAME": "com.ccsoft.cordovasample"
         },
-        "org.apache.cordova.console": {
+        "com.ccsoft.plugin.CordovaFacebook": {
             "PACKAGE_NAME": "com.ccsoft.cordovasample"
         }
     },
