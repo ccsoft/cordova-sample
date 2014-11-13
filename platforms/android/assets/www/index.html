@@ -41,7 +41,8 @@
 				<a href="#" class="btn" onclick="plugin.invite('Invite texts should be inviting');">invite</a>
                 <a href="#" class="btn" onclick="plugin.share('Test', 'http://www.example.com', 'http://www.example.com/test.png', 'Test feed caption', 'Test feed description.');">share</a>
                 <a href="#" class="btn" onclick="plugin.postScore(42, function() { alert('posted score'); }, function(err) { console.log(err); });">post score (42)</a>
-                <a href="#" class="btn" onclick="plugin.getScores(function(resp) { for (var i = 0; i < resp.length; i++) { console.log('Score Order: ' + i + '\nUser Id: ' + resp[i].user.id + '\nUser Name: ' + resp[i].user.name + '\nScore: ' + resp[i].score);} }, function(err) { console.log(err); });">get scores</a>
+                <a href="#" class="btn" onclick="plugin.getScores(function(resp) { for (var i = 0; i < resp.length; i++) { alert('Score Order: ' + i + '\nUser Id: ' + resp[i].user.id + '\nUser Name: ' + resp[i].user.name + '\nScore: ' + resp[i].score);} }, function(err) { console.log(err); });">get scores</a>
+                <a href="#" class="btn" onclick="plugin.graphCall('me', {'fields': 'id,name,email'}, 'GET', function(data) { alert('User Id: ' + data.id + '\nName: ' + data.name + '\nEmail: ' + data.email); }, function(err) { console.log(err); });">graph call </a>
                 <a href="#" class="btn" onclick="plugin.logout();">logout</a>
             </div>
         </div>
