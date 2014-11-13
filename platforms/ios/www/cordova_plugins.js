@@ -26,7 +26,7 @@ module.exports.metadata =
 // TOP OF METADATA
 {
     "org.apache.cordova.console": "0.2.5",
-    "com.ccsoft.plugin.CordovaFacebook": "1.0.2"
+    "com.ccsoft.plugin.CordovaFacebook": "1.0.3"
 }
 // BOTTOM OF METADATA
 });
