@@ -117,7 +117,7 @@ public class CordovaFacebook extends CordovaPlugin {
         	        // change the state of the button or do whatever you want
         	        Log.i(TAG, "Logged in fb");
         	        JSONObject resp = prepareAccessTokenInfo(mSimpleFacebook.getSession());
-    				callbackContext.success(resp);        	        
+    				callbackContext.success(resp);      				
         	    }
 
         	    @Override
@@ -473,9 +473,10 @@ public class CordovaFacebook extends CordovaPlugin {
 			JSONArray permissions  = new JSONArray();
 			List<String> parr = session.getPermissions();
 	    	for (String item : parr) {
-	    		permissions.put(item);        	    		
+	    		permissions.put(item);
+	    		Log.d(TAG, item);
 	    	}
-			r.put("permissions", permissions);
+			r.put("permissions", permissions);			
 		} catch (JSONException e) {
 			Log.e(TAG, "Exception when preparing access token json", e);			
 			return null;

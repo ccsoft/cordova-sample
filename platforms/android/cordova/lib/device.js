@@ -61,10 +61,15 @@ module.exports.install = function(target) {
         if (device_list.indexOf(target) < 0)
             return Q.reject('ERROR: Unable to find target \'' + target + '\'.');
 
-        var apk_path = build.get_apk();
+        var apk_path;
+        if (typeof process.env.DEPLOY_APK_ARCH == 'undefined') {
+            apk_path = build.get_apk();
+        } else {
+            apk_path = build.get_apk(null, process.env.DEPLOY_APK_ARCH);
+        }
         launchName = appinfo.getActivityName();
         console.log('Installing app on device...');
-        var cmd = 'adb -s ' + target + ' install -r ' + apk_path;
+        var cmd = 'adb -s ' + target + ' install -r "' + apk_path + '"';
         return exec(cmd);
     }).then(function(output) {
         if (output.match(/Failure/)) return Q.reject('ERROR: Failed to install apk to device: ' + output);
@@ -79,7 +84,7 @@ module.exports.install = function(target) {
         var cmd = 'adb -s ' + target + ' shell am start -W -a android.intent.action.MAIN -n ' + launchName;
         return exec(cmd);
     }).then(function() {
-        console.log('LANCH SUCCESS');
+        console.log('LAUNCH SUCCESS');
     }, function(err) {
         return Q.reject('ERROR: Failed to launch application on device: ' + err);
     });

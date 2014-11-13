@@ -19,13 +19,31 @@
        under the License.
 */
 
-var check_reqs = require('./lib/check_reqs');
+var child_process = require('child_process'),
+    Q       = require('q');
+var isWindows = process.platform.slice(0, 3) == 'win';
 
-check_reqs.run().done(
-    function success() {
-        console.log('Looks like your environment fully supports cordova-android development!');
-    }, function fail(err) {
-        console.log(err);
-        process.exit(2);
+// Takes a command and optional current working directory.
+module.exports = function(cmd, args, opt_cwd) {
+    var d = Q.defer();
+    try {
+        // Work around spawn not being able to find .bat files.
+        if (isWindows) {
+          args.unshift('/s', '/c', cmd);
+          cmd = 'cmd';
+        }
+        var child = child_process.spawn(cmd, args, {cwd: opt_cwd, stdio: 'inherit'});
+        child.on('exit', function(code) {
+            if (code) {
+                d.reject('Error code ' + code + ' for command: ' + cmd + ' with args: ' + args);
+            } else {
+                d.resolve();
+            }
+        });
+    } catch(e) {
+        console.error('error caught: ' + e);
+        d.reject(e);
     }
-);
+    return d.promise;
+}
+
