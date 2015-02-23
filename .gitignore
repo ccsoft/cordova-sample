@@ -79,3 +79,4 @@ local.properties
 libs/ios/FacebookSDK/
 libs/android/facebook-android-sdk-3.16/
 libs/android/facebook-android-sdk-3.18/
+libs/android/facebook-android-sdk-3.23.0/
