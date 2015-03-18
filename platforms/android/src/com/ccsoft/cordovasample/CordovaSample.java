@@ -22,8 +22,13 @@ package com.ccsoft.cordovasample;
 import android.os.Bundle;
 import org.apache.cordova.*;
 
+import com.vungle.publisher.VunglePub;
+
 public class CordovaSample extends CordovaActivity 
 {
+	// get the VunglePub instance
+	final VunglePub vunglePub = VunglePub.getInstance();
+	  
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
@@ -32,6 +37,18 @@ public class CordovaSample extends CordovaActivity
         // Set by <content src="index.html" /> in config.xml
         super.loadUrl(launchUrl);
         //super.loadUrl("file:///android_asset/www/index.html")
+    }
+    
+    @Override
+    protected void onPause() {
+        super.onPause();
+        vunglePub.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        vunglePub.onResume();
     }
 }
 

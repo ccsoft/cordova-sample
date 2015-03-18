@@ -34,7 +34,7 @@ var app = {
     // function, we must explicity call 'app.receivedEvent(...);'
     onDeviceReady: function() {
         app.receivedEvent('deviceready');
-        plugin = new CC.CordovaFacebook();
+        plugin = new CC.Vungle();
     },
     // Update DOM on a Received Event
     receivedEvent: function(id) {

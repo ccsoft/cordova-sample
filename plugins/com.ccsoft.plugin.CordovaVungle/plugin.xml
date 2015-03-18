@@ -1,0 +1,51 @@
+<plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        id="com.ccsoft.plugin.CordovaVungle"
+        version="1.1.0">
+  <engines>
+    <engine name="cordova" version=">=3.0.0" />
+  </engines>
+    <name>CordovaVungle</name>
+    <description>Cordova plugin to use Vungle services inside your Cordova/PhoneGap project.</description>
+    <author>CCSoft</author>
+    <repo>https://github.com/ccsoft/cordova-vungle/</repo>
+    <issue>https://github.com/ccsoft/cordova-vungle/issues</issue>
+    <license>Apache 2.0</license>
+    <keywords>vungle,phonegap,cordova</keywords>
+ 
+    <js-module src="www/vungle.js" name="Vungle">
+        <merges target="CC" />
+    </js-module>
+ 
+    <!-- android -->
+    <platform name="android">
+      	<source-file src="src/android/CordovaVungle.java" target-dir="src/com/ccsoft/plugin" />					  
+		<config-file target="AndroidManifest.xml" parent="/*">
+		  <uses-permission android:name="android.permission.INTERNET" />
+		  <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+		  <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+		</config-file>
+		<config-file target="AndroidManifest.xml" parent="/*/application">
+			<activity
+			  android:name="com.vungle.publisher.FullScreenAdActivity"
+			  android:configChanges="keyboardHidden|orientation|screenSize"
+			  android:theme="@android:style/Theme.NoTitleBar.Fullscreen"/>			
+		</config-file>
+		<config-file target="res/xml/config.xml" parent="/*">
+		  <feature name="CordovaVungle">
+			<param name="android-package" value="com.ccsoft.plugin.CordovaVungle" />
+		  </feature>		
+		</config-file> 
+    </platform> 
+	
+	<platform name="ios">        
+        <config-file target="config.xml" parent="/*">
+            <feature name="CordovaVungle">
+                <param name="ios-package" value="CordovaVungle" />
+            </feature>
+        </config-file>
+        <header-file src="src/ios/CordovaVungle.h" />
+        <source-file src="src/ios/CordovaVungle.m" />
+        
+    </platform>          
+</plugin>
